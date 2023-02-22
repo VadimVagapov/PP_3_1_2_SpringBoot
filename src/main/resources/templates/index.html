@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+<div align="center">
+    <h2>Users</h2>
+    <h3>Search by any field</h3>
+    <form method="get" action="search">
+        <input type="text" name="keyword" />
+        <input type="submit" value="Search" />
+    </form>
+    <h3><a href="/new">New User</a></h3>
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>LastName</th>
+            <th>E-mail</th>
+        </tr>
+
+        <tr th:if="${listUsers.isEmpty()}">
+            <td colspan="4"> No Users Available </td>
+        </tr>
+        <tr th:each="user : ${listUsers}">
+            <td><span th:text="${user.id}"> Id </span></td>
+            <td><span th:text="${user.name}"> Name </span></td>
+            <td><span th:text="${user.lastname}"> LastName </span></td>
+            <td><span th:text="${user.email}"> Email </span></td>
+            <td>
+                <form th:action="@{edit}" method="post">
+                    <input type="hidden" name="id" th:value="${user.id}" />
+                    <input type="submit" value="Edit" class="btn btn-danger" />
+                </form>
+                <form th:action="@{delete}" method="post">
+                    <input type="hidden" name="id" th:value="${user.id}" />
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
